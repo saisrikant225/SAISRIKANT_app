@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verilog Code Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Ubuntu', sans-serif;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ff0000;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-family: 'Ubuntu', sans-serif;
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #cc0000;
+        }
+
+        #output {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        pre {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .task-btns {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .task-btns button {
+            margin: 10px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            button {
+                width: 100%;
+                padding: 15px;
+                font-size: 18px;
+            }
+
+            pre {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Verilog Code Viewer</h1>
+            <h2>BY SAISRIKANT HARI 23BEC0446</h2>
+            <img src ="sai.jpg" alt="saipic"/>
+            <p>Explore Verilog code solutions for various tasks below. Click a task to view the code and explanations.</p>
+        </div>
+
+        <div class="task-btns">
+            <button onclick="showTask(1)">1. Types of Programmable Logic Devices</button>
+            <button onclick="showTask(2)">2. Logic Families: Digital Logic Gates</button>
+            <button onclick="showTask(3)">3. Digital Code Converter Design</button>
+            <button onclick="showTask(4)">4. Seven-Segment Decoder (Three Levels)</button>
+            <button onclick="showTask(5)">5. Seven-Segment Decoder (Common Cathode & Anode) using Boolean Laws</button>
+            <button onclick="showTask(6)">6. Seven-Segment Decoder (Common Cathode) using K-Map</button>
+            <button onclick="showTask(7)">7. Seven-Segment Decoder (Common Anode) using K-Map</button>
+            <button onclick="showTask(8)">8. Seven-Segment Decoder using Multiplexer</button>
+            <button onclick="showTask(9)">9. Seven-Segment Decoder using Demultiplexer</button>
+            <button onclick="showTask(10)">10. Seven-Segment Decoder using 4:16 Decoder</button>
+            <button onclick="window.location.href='https://colab.research.google.com/drive/1kr5STVuDED72ATMvmobqyL-rGB6tjLBX#scrollTo=iwiry01lE9vR'" style="background-color: #1C87C9;">CODE CONVERTER</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function showTask(taskNumber) {
+            switch (taskNumber) {
+                case 1:
+                    showPLDs();
+                    break;
+                case 2:
+                    showLogicFamilies();
+                    break;
+                case 3:
+                    showCodeConverter();
+                    break;
+                case 4:
+                    showSevenSegmentDecoder();
+                    break;
+                case 5:
+                    showBooleanLawsDecoder();
+                    break;
+                case 6:
+                    showKMapCathodeDecoder();
+                    break;
+                case 7:
+                    showKMapAnodeDecoder();
+                    break;
+                case 8:
+                    showMultiplexerDecoder();
+                    break;
+                case 9:
+                    showDemultiplexerDecoder();
+                    break;
+                case 10:
+                    showDecoder416();
+                    break;
+                default:
+                    document.getElementById('output').innerHTML = "<p>Invalid choice. Please try again.</p>";
+            }
+        }
+
+        // 1. Programmable Logic Devices (PLA, PAL, CPLD, FPGA)
+        function showPLDs() {
+            document.getElementById('output').innerHTML = `
+                <h3>Types of Programmable Logic Devices</h3>
+                <p>Here is an overview of the different types of programmable logic devices.</p>
+                <pre>
+// Verilog Code for PLA Example
+module PLA (input A, B, C, output F);
+    assign F = (A & B) | (~A & C);
+endmodule;
+
+// Verilog Code for PAL Example
+module PAL (input A, B, C, output F);
+    assign F = (~A & B) | (A & ~C);
+endmodule;
+                </pre>
+                <img src="pla_1.png" alt="PLA, PAL, CPLD, FPGA Architecture" />
+                <img src="PAL_1.png" alt="PAL"/>
+                <img src="CPLD_1.png" alt="CPLD"/>
+            `;
+        }
+
+        // 2. Logic Families: Digital Logic Gates, TTL, CMOS
+        function showLogicFamilies() {
+            document.getElementById('output').innerHTML = `
+                <h3>Logic Families: Digital Logic Gates, TTL, CMOS</h3>
+                <p>Explanation and Verilog code for digital logic gates and logic families.</p>
+                <pre>
+// Verilog Code for AND Gate
+module AND_Gate(input A, B, output Y);
+    assign Y = A & B;
+endmodule;
+
+// Verilog Code for OR Gate
+module OR_Gate(input A, B, output Y);
+    assign Y = A | B;
+endmodule;
+                </pre>
+                <img src="TTL_1.png" alt="Logic Families: TTL " />
+                <img src="CMOS_1.png" alt="cmos"/>
+            `;
+        }
+
+        // 3. Digital Code Converter Design
+        function showCodeConverter() {
+    document.getElementById('output').innerHTML = `
+        <h3>BCD to Gray Code Conversion (Verilog Code)</h3>
+        <p>Verilog code for converting Binary Coded Decimal (BCD) to Gray Code.</p>
+        <pre>
+// BCD to Gray Code Conversion in Verilog
+
+module BCD_to_Gray(
+    input [3:0] bcd,   // 4-bit BCD input
+    output [3:0] gray  // 4-bit Gray Code output
+);
+    assign gray[3] = bcd[3];              // Most significant bit (MSB) remains the same
+    assign gray[2] = bcd[3] ^ bcd[2];     // XOR of BCD bit 3 and bit 2
+    assign gray[1] = bcd[2] ^ bcd[1];     // XOR of BCD bit 2 and bit 1
+    assign gray[0] = bcd[1] ^ bcd[0];     // XOR of BCD bit 1 and bit 0
+endmodule
+        </pre>
+    `;
+}
+
+
+        // 4. Seven-Segment Decoder (Three Levels)
+        function showSevenSegmentDecoder() {
+    document.getElementById('output').innerHTML = `
+        <h3>Seven-Segment Decoder Implementation (Three Levels)</h3>
+        <p>Verilog code for a simple seven-segment decoder at the behavioral level.</p>
+        <pre>
+// Updated Verilog Code for Seven-Segment Decoder
+
+// seven_segment_L57L58_20_23BEC0446
+module seven_segment_L57L58_20_23BEC0446(
+    input [3:0] bi,
+    output reg [6:0] seg
+);
+    always @(*) begin
+        case(bi)
+            4'b0000: seg = 7'b0111111; 
+            4'b0001: seg = 7'b0000110; 
+            4'b0010: seg = 7'b1011011; 
+            4'b0011: seg = 7'b1001111; 
+            4'b0100: seg = 7'b1100110; 
+            4'b0101: seg = 7'b1101101; 
+            4'b0110: seg = 7'b1111101; 
+            4'b0111: seg = 7'b0000111; 
+            4'b1000: seg = 7'b1111111; 
+            4'b1001: seg = 7'b1101111; 
+            4'b1010: seg = 7'b1110111; 
+            4'b1011: seg = 7'b1111100; 
+            4'b1100: seg = 7'b0111001; 
+            4'b1101: seg = 7'b1011110; 
+            4'b1110: seg = 7'b1111001;
+            4'b1111: seg = 7'b1110001; 
+            default: seg = 7'b0000000; 
+        endcase
+    end
+Endmodule
+
+// seven_segment_L7L8_03_23BEC0446
+module seven_segment_L7L8_03_23BEC0446(
+    input [3:0] binary_input,
+    output [6:0] seg
+);
+    wire not_b3, not_b2, not_b1, not_b0;
+    wire and_1, and_2, and_3, and_4;
+
+    not (not_b3, binary_input[3]);
+    not (not_b2, binary_input[2]);
+    not (not_b1, binary_input[1]);
+    not (not_b0, binary_input[0]);
+
+    // seg[0]
+    and (and_1, not_b3, not_b2, not_b1, binary_input[0]);
+    and (and_2, not_b3, binary_input[2], not_b1, not_b0);
+    and (and_3, binary_input[3], not_b2, binary_input[1], binary_input[0]);
+    and (and_4, binary_input[3], binary_input[2], ~binary_input[1], binary_input[0]);
+    or (seg[0], and_1, and_2, and_3, and_4);
+
+    // Similar gate-level implementations for seg[1] to seg[6]...
+    // Due to space, the rest of the logic for seg[1] to seg[6] would follow a similar pattern.
+endmodule
+
+// seven_segment_L57L58_20_23BEC0446 (Alternative Version)
+module seven_segment_L57L58_20_23BEC0446(
+    input [3:0] binary_input,
+    output [6:0] seg
+);
+    wire not_b3, not_b2, not_b1, not_b0;
+    wire and_1, and_2, and_3, and_4;
+
+    not (not_b3, binary_input[3]);
+    not (not_b2, binary_input[2]);
+    not (not_b1, binary_input[1]);
+    not (not_b0, binary_input[0]);
+
+    // seg[0]
+    and (and_1, not_b3, not_b2, not_b1, binary_input[0]);
+    and (and_2, not_b3, binary_input[2], not_b1, not_b0);
+    and (and_3, binary_input[3], not_b2, binary_input[1], binary_input[0]);
+    and (and_4, binary_input[3], binary_input[2], ~binary_input[1], binary_input[0]);
+    or (seg[0], and_1, and_2, and_3, and_4);
+
+    // Similar gate-level implementations for seg[1] to seg[6]...
+    // Due to space, the rest of the logic for seg[1] to seg[6] would follow a similar pattern.
+endmodule
+        </pre>
+    `;
+}
+
+
+        // 5. Seven-Segment Decoder using Boolean Laws
+        function showBooleanLawsDecoder() {
+    document.getElementById('output').innerHTML = `
+        <h3>Seven-Segment Decoder for Common Cathode Type (Boolean Expressions)</h3>
+        <p>Verilog code for implementing a seven-segment decoder circuit for common cathode types based on Boolean laws.</p>
+        <pre>
+// Seven-Segment Decoder for Common Cathode Type (Boolean Expression)
+
+module seven_segment_common_cathode(
+    input [3:0] binary_input,
+    output reg [6:0] seg
+);
+    always @(*) begin
+        case(binary_input)
+            4'b0000: seg = 7'b1111110; // 0
+            4'b0001: seg = 7'b0110000; // 1
+            4'b0010: seg = 7'b1101101; // 2
+            4'b0011: seg = 7'b1111001; // 3
+            4'b0100: seg = 7'b0110011; // 4
+            4'b0101: seg = 7'b1011011; // 5
+            4'b0110: seg = 7'b1011111; // 6
+            4'b0111: seg = 7'b1110000; // 7
+            4'b1000: seg = 7'b1111111; // 8
+            4'b1001: seg = 7'b1111011; // 9
+            4'b1010: seg = 7'b1110111; // A
+            4'b1011: seg = 7'b0011111; // b
+            4'b1100: seg = 7'b1001110; // C
+            4'b1101: seg = 7'b0111101; // d
+            4'b1110: seg = 7'b1001111; // E
+            4'b1111: seg = 7'b1000111; // F
+            default: seg = 7'b0000000; // Default case
+        endcase
+    end
+endmodule
+
+// Boolean Expression for Each Segment
+// Segment 'a' logic
+assign a = (~b3 & ~b2 & b1 & b0) | (b3 & ~b2 & b1 & ~b0);
+// Segment 'b' logic
+assign b = (b3 & b2 & ~b1 & ~b0) | (~b3 & ~b2 & b1 & ~b0);
+// Segment 'c' logic
+assign c = (b3 & ~b2 & ~b1 & ~b0) | (~b3 & b2 & b1 & b0);
+// Segment 'd' logic
+assign d = (b3 & ~b2 & b1 & b0) | (~b3 & b2 & ~b1 & ~b0);
+// Segment 'e' logic
+assign e = (~b3 & ~b2 & b1 & b0) | (b3 & b2 & ~b1 & ~b0);
+// Segment 'f' logic
+assign f = (~b3 & b2 & b1 & ~b0) | (b3 & ~b2 & ~b1 & ~b0);
+// Segment 'g' logic
+assign g = (b3 & ~b2 & b1 & b0) | (~b3 & b2 & ~b1 & ~b0);
+        </pre>
+    `;
+    function showCommonAnodeSevenSegment() {
+    document.getElementById('output').innerHTML = `
+        <h3>Common Anode Seven-Segment Decoder (Boolean Expressions)</h3>
+        <p>Here are the Boolean expressions for each segment in a Common Anode seven-segment decoder:</p>
+        <pre>
+// Boolean Expressions for Common Anode Type
+
+// Segment A
+assign A = ~(B + C + D);
+
+// Segment B
+assign B = ~(A + D);
+
+// Segment C
+assign C = ~(B + D);
+
+// Segment D
+assign D = ~(A + B);
+
+// Segment E
+assign E = ~(C + D);
+
+// Segment F
+assign F = ~(A + C);
+
+// Segment G
+assign G = ~(A + B + C);
+
+// Verilog Code for Seven-Segment Decoder (Common Anode Type)
+
+module common_anode_seven_segment (
+    input [3:0] bin_input, 
+    output reg [6:0] seg
+);
+    always @(bin_input) begin
+        case(bin_input)
+            4'b0000: seg = 7'b1111110;  // 0
+            4'b0001: seg = 7'b0110000;  // 1
+            4'b0010: seg = 7'b1101101;  // 2
+            4'b0011: seg = 7'b1111001;  // 3
+            4'b0100: seg = 7'b0110011;  // 4
+            4'b0101: seg = 7'b1011011;  // 5
+            4'b0110: seg = 7'b1011111;  // 6
+            4'b0111: seg = 7'b1110000;  // 7
+            4'b1000: seg = 7'b1111111;  // 8
+            4'b1001: seg = 7'b1111011;  // 9
+            default: seg = 7'b0000000;  // Off
+        endcase
+    end
+endmodule
+        </pre>
+    `;
+}
+
+}
+
+
+        // 6. Seven-Segment Decoder (Common Cathode) using K-Map
+        function showKMapCathodeDecoder() {
+            document.getElementById('output').innerHTML = `
+                <h3>Seven-Segment Decoder (Common Cathode) using K-Map</h3>
+                <p>Design the decoder using Karnaugh maps for the common cathode type.</p>
+                <pre>
+// Example Verilog code for segment 'a' from K-map simplification
+module SevenSegment_KMap_Cathode(input [3:0] digit, output reg a);
+    always @(digit) begin
+        case (digit)
+            4'b0000: a = 1;
+            // Simplified cases from K-map
+        endcase
+    end
+endmodule;
+                </pre>
+            `;
+        }
+
+        // 7. Seven-Segment Decoder (Common Anode) using K-Map
+        function showKMapAnodeDecoder() {
+            document.getElementById('output').innerHTML = `
+                <h3>Seven-Segment Decoder (Common Anode) using K-Map</h3>
+                <p>Design the decoder using Karnaugh maps for the common anode type.</p>
+                <pre>
+// Example Verilog code for segment 'a' from K-map simplification
+module SevenSegment_KMap_Anode(input [3:0] digit, output reg a);
+    always @(digit) begin
+        case (digit)
+            4'b0000: a = 0;
+            // Simplified cases from K-map
+        endcase
+    end
+endmodule;
+                </pre>
+            `;
+        }
+
+        // 8. Seven-Segment Decoder using Multiplexer
+        function showMultiplexerDecoder() {
+            document.getElementById('output').innerHTML = `
+                <h3>Seven-Segment Decoder using Multiplexer</h3>
+                <p>Design a seven-segment decoder using multiplexers (16:1, 8:1, 4:1, 2:1).</p>
+                <pre>
+// Example Verilog code for 16:1 Multiplexer based decoder
+module Mux16to1(input [3:0] select, input [15:0] mux_inputs, output y);
+    assign y = mux_inputs[select];
+endmodule;
+                </pre>
+                <img src="MULTI.png" alt="Multiplexer Decoder" />
+            `;
+        }
+
+        // 9. Seven-Segment Decoder using Demultiplexer
+        function showDemultiplexerDecoder() {
+            document.getElementById('output').innerHTML = `
+                <h3>Seven-Segment Decoder using Demultiplexer</h3>
+                <p>Design a seven-segment decoder using demultiplexers (1:16, 1:8, 1:4, 1:2).</p>
+                <pre>
+// Example Verilog code for 1:16 Demultiplexer based decoder
+module Demux1to16(input [3:0] select, input d, output [15:0] y);
+    assign y = (select == 4'b0000) ? d : 0;
+endmodule;
+                </pre>
+                <img src="ANODE_1.png"  alt="common anode"/>
+                <img src="DEMUX_2.png" alt="demux"/>
+                <img src="DEMUX_1.png" alt="demulti"/>
+            `;
+        }
+
+        // 10. Seven-Segment Decoder using 4:16 Decoder
+        function showDecoder416() {
+            document.getElementById('output').innerHTML = `
+                <h3>Seven-Segment Decoder using 4:16 Decoder</h3>
+                <p>Design a seven-segment decoder using a 4:16 decoder and internal 2:4 decoders.</p>
+                <pre>
+// Example Verilog code for 4:16 Decoder based decoder
+module Decoder4to16(input [3:0] in, output [15:0] out);
+    assign out = (in == 4'b0001) ? 16'b0000000000000001 : 0;
+endmodule;
+                </pre>
+                <img src="common_anode1.png" alt="anode"/>
+                <img src="DECODER_1.png" alt="decoder"/>
+            `;
+        }
+    </script>
+</body>
+</html>
